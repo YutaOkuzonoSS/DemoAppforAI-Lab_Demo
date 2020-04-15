@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AI-OCR Demo用　入力画面</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-3.0.0.js"></script>
+    <!-- <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h1>AI-OCR 請求明細入力　デモアプリ</h1>
+    <div class="container-fluid">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>お客様コード</th>
+                    <th>お客様名</th>
+                    <th>お届け日</th>
+                    <th>品名</th>
+                    <th>数量</th>
+                    <th>単価</th>
+                    <th>金額</th>
+                    <th>備考</th>
+                </tr>
+            </thead>
+            <tbody id="table_tbody"></tbody>
+        </table>
+        <div class="row">
+            <p  id="no_data_message"
+                style="
+                margin: 10px auto;
+                display: block;
+            ">データがありません</p>
+        </div>
+    </div>
+    <div class="container-fluid"　style="background-color: #bee7f361; padding-top: 18px; padding-bottom: 18px;">
+        <form id="form" action="index.html" method="post" class="form-inline">
+            <div class=row>
+                <div class="col-sm-3">
+                    <div class="form-group ">
+                        <label for="name">お客様コード
+                        </label>
+                        <input type="text" class="form-control" name="customer_code"" placeholder="">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group ">
+                        <label for="name">お客様名</label>
+                        <input type="text" class="form-control" name="customer_name" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+            <div class=row>
+                <div class="col-sm-2">
+                    <div class="form-group ">
+                        <label for="name">お届け日</label>
+                        <input type="text" class="form-control" name="deliver_date"" placeholder="MM月YY日">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group ">
+                        <label for="name">品名</label>
+                        <input type="text" class="form-control" name="name" placeholder="">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group ">
+                        <label for="name">数量</label>
+                        <input type="text" class="form-control" name="amount" placeholder="5">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group ">
+                        <label for="name">単価</label>
+                        <input type="text" class="form-control" name="unit_price" placeholder="1000">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group ">
+                        <label for="name">金額</label>
+                        <input type="text" class="form-control" name="price" placeholder="1000">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group ">
+                        <label for="name">備考</label>
+                        <input type="text" class="form-control" name="note" placeholder="備考">
+                    </div>
+                </div>
+            </div>
+            <button id="submit_button" type="submit" class="btn btn-primary btn-block" style="margin:15px 15px">登録する</button>
+        </form>
+    </div>
+</body>
+
+
+<style>
+.row{
+    width: 100%;
+    margin-bottom: 20px;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+    const form = $('#form');
+    let id = 1;
+    $('#submit_button').click(function(){
+        var values = {};
+        $('input[type="text"]').each(function(i, elem){
+            values[$(elem).attr("name")] = $(elem).val();
+            $(elem).val('');
+        });
+
+        const html  = '<tr><th>'+ id +'</th><td>'+ values['customer_code']+'</td><td>'+values['customer_name'] +'</td><td>'+ values['deliver_date'] +'</td><td>'+ values['name'] +'</td><td>'+ values['amount'] +'</td><td>'+ values['unit_price'] +'</td><td>'+ values['price'] +'</td><td>'+ values['note'] +'</td></tr>';
+
+        $('#no_data_message').hide();
+        $('#table_tbody').append(html);
+
+        id += 1;
+        return false;
+    })
+});
+</script>
+</html>
